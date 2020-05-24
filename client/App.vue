@@ -33,7 +33,7 @@ export default {
   },
   mounted() {
     if (this.ws) this.ws.close();
-    this.ws = new WebSocket(`ws://${window.location.host}/ws`);
+    this.ws = new WebSocket(`wss://${window.location.host}/ws`);
     this.ws.addEventListener("message", this.onReceiveMessage);
   },
   beforeUnmount() {
