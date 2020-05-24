@@ -1,6 +1,12 @@
 import { acceptWebSocket, acceptable } from "https://deno.land/std/ws/mod.ts";
 import { chat } from "./chat.ts";
 import { Server, Router } from "https://deno.land/x/http_wrapper@dev/mod.ts";
+import * as flags from "https://deno.land/std/flags/mod.ts";
+
+const { args, exit } = Deno;
+const DEFAULT_PORT = 5000;
+const argPort = flags.parse(args).port;
+const port = argPort ? Number(argPort) : DEFAULT_PORT;
 
 const router = new Router();
 
@@ -44,5 +50,5 @@ app.use(testRouter.routes);
 app.static("client/dist", "/");
 
 app
-  .start({ port: 3000 })
+  .start({ port })
   .then((config) => console.log(`Server running on localhost:${config.port}`));
