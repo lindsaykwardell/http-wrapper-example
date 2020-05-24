@@ -1,0 +1,17 @@
+{
+  "name": "http-wrapper-example",
+  "version": "1.0.0",
+  "description": "An example using the Deno http_wrapper module.",
+  "scripts": {
+    "dev": "concurrently \"deno run --allow-net --allow-read index.ts\" \"yarn --cwd client run dev\"",
+    "build": "yarn --cwd client run build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "concurrently": "^5.2.0",
+    "mime": "^2.4.5"
+  }
+}
