@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "An example using the Deno http_wrapper module.",
   "scripts": {
-    "dev": "concurrently \"deno run --allow-net --allow-read index.ts\" \"yarn --cwd client run dev\"",
+    "dev": "concurrently \"denon run --allow-net --allow-read index.ts\" \"yarn --cwd client run dev\"",
     "build": "yarn --cwd client run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

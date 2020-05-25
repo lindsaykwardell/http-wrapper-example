@@ -1,6 +1,4 @@
-import { acceptWebSocket, acceptable } from "https://deno.land/std/ws/mod.ts";
-import { chat } from "./chat.ts";
-import { Server, Router } from "https://deno.land/x/http_wrapper@v0.2.4/mod.ts";
+import { Server, Router, Socket } from "https://deno.land/x/http_wrapper@dev/mod.ts";
 import * as flags from "https://deno.land/std/flags/mod.ts";
 
 const { args, exit } = Deno;
@@ -9,6 +7,12 @@ const argPort = flags.parse(args).port;
 const port = argPort ? Number(argPort) : DEFAULT_PORT;
 
 const router = new Router();
+const socket = new Socket("/ws");
+
+socket.on("message", (msg, connId) => {
+  console.log("Received");
+  socket.emit("message", `[${connId}]: ${msg.body}`);
+});
 
 router.get("/old", async (req) => {
   req.respond({
@@ -18,17 +22,6 @@ router.get("/old", async (req) => {
     }),
     body: await Deno.open("./index.html"),
   });
-});
-
-router.get("/ws", (req) => {
-  if (acceptable(req)) {
-    acceptWebSocket({
-      conn: req.conn,
-      bufReader: req.r,
-      bufWriter: req.w,
-      headers: req.headers,
-    }).then(chat);
-  }
 });
 
 const testRouter = new Router("/bob");
@@ -47,6 +40,7 @@ testRouter.get("/", (req) => {
 const app = new Server();
 app.use(router.routes);
 app.use(testRouter.routes);
+app.use(socket.routes);
 app.static("client/dist", "/");
 
 app
