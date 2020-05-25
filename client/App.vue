@@ -10,7 +10,11 @@
       <form @submit.prevent="onSendMessage">
         <div class="flex mt-4">
           <input type="text" class="shadow-md h-12 w-full flex-grow border" />
-          <button class="flex-shrink w-32 bg-blue-300 hover:bg-blue-500 transition duration-200 shadow-md">Send</button>
+          <button
+            class="flex-shrink w-32 bg-blue-300 hover:bg-blue-500 transition duration-200 shadow-md"
+          >
+            Send
+          </button>
         </div>
       </form>
     </div>
@@ -45,7 +49,7 @@ export default {
 
     onMounted(() => {
       if (state.ws) state.ws.close();
-      state.ws = new WebSocket(`ws://localhost:5000/ws`);
+      state.ws = new WebSocket(`wss://${window.location.host}/ws`);
       state.ws.addEventListener("message", onReceiveMessage);
     });
 
