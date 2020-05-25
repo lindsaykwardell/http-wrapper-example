@@ -1,4 +1,8 @@
-import { Server, Router, Socket } from "https://deno.land/x/http_wrapper@dev/mod.ts";
+import {
+  Server,
+  Router,
+  Socket,
+} from "https://deno.land/x/http_wrapper@dev/mod.ts";
 import * as flags from "https://deno.land/std/flags/mod.ts";
 
 const { args, exit } = Deno;
@@ -10,7 +14,6 @@ const router = new Router();
 const socket = new Socket("/ws");
 
 socket.on("message", (msg, connId) => {
-  console.log("Received");
   socket.emit("message", `[${connId}]: ${msg.body}`);
 });
 

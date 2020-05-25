@@ -23,13 +23,17 @@
 
 <script>
 import HelloWorld from "./components/HelloWorld.vue";
-import { reactive, ref, onMounted, onBeforeUnmount } from "vue";
+import { reactive, ref, onMounted, onBeforeUnmount, computed } from "vue";
 
 export default {
   name: "App",
   setup() {
     const state = reactive({ ws: null });
     const messages = ref([]);
+
+    const SOCKET_HOST = window.location.host.includes("localhost")
+      ? "localhost:5000"
+      : window.location.host;
 
     const onReceiveMessage = ({ data }) => {
       const msg = JSON.parse(data);
@@ -47,9 +51,14 @@ export default {
       e.target[0].value = "";
     };
 
+    const protocol = computed(() => {
+      return location.protocol !== "https:" ? "ws" : "wss";
+    });
+
     onMounted(() => {
       if (state.ws) state.ws.close();
-      state.ws = new WebSocket(`wss://${window.location.host}/ws`);
+
+      state.ws = new WebSocket(`${protocol.value}://${SOCKET_HOST}/ws`);
       state.ws.addEventListener("message", onReceiveMessage);
     });
 
