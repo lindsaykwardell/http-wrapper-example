@@ -1,7 +1,7 @@
 <template>
   <div>
     <img alt="Vue logo" src="./logo.png" class="m-auto" />
-    <div class="w-2/3 m-auto">
+    <div class="w-full md:w-2/3 p-4 m-auto">
       <div class="chat-box">
         <div v-for="(m, index) in messages" :key="index">
           {{ m }}
@@ -83,6 +83,7 @@ export default {
 
 .chat-box {
   @apply shadow-md border overflow-y-scroll;
-  height: 500px;
+  max-height: 500px;
+  min-height: 40vh;
 }
 </style>
