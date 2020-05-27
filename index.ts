@@ -2,7 +2,7 @@ import {
   Server,
   Router,
   Socket,
-} from "https://deno.land/x/http_wrapper@v0.3.0/mod.ts";
+} from "https://deno.land/x/http_wrapper@v0.4.0/mod.ts";
 import * as flags from "https://deno.land/std/flags/mod.ts";
 
 const { args, exit } = Deno;
